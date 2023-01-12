@@ -27,7 +27,10 @@ const FeaturedProducts = () => {
       <div className="section-center featured">
         {featured.slice(0, 3).map((product) => {
           return <Product key={product.id} {...product} />;
-        })}{" "}
+        })}
+        <Link to="/products" className="btn">
+          all products
+        </Link>
       </div>
     </Wrapper>
   );
