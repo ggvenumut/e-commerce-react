@@ -44,7 +44,46 @@ const CheckoutForm = () => {
       },
     },
   };
-  return <h4>hello from Stripe Checkout </h4>;
+
+  const createPaymentIntent = async () => {
+    console.log("hello");
+  };
+
+  useEffect(() => {
+    createPaymentIntent();
+  }, []);
+
+  const handleChange = async (event) => {};
+  const handleSubmit = async (ev) => {};
+
+  return (
+    <div>
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <CardElement
+          id="cart-element"
+          options={cartStyle}
+          onChange={handleChange}
+        />
+        <button disabled={processing || disabled || succeeded} id="submit">
+          <span id="button-text">
+            {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
+          </span>
+        </button>
+        {error && (
+          <div className="cart-error" role="alert">
+            {error}
+          </div>
+        )}
+        <p className={succeeded ? "result-message" : "resul-message hidden"}>
+          Payment succeded, see the result in your
+          <a href={`https://dashboard.stripe.com/test/payments`}>
+            Stripe dashboard
+          </a>
+          refresh the page to pay again
+        </p>
+      </form>
+    </div>
+  );
 };
 
 const StripeCheckout = () => {
