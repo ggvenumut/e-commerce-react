@@ -16,7 +16,9 @@ import { useNavigate } from "react-router-dom";
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = () => {
-  const { cart, total, amount, shipping_fee, clearCart } = useCartContext();
+  const { cart, total, amount, shipping_fee, clearCart, total_amount } =
+    useCartContext();
+
   const { myUser } = useUserContext();
   const navigate = useNavigate();
   // STRIPE STUFF
@@ -46,7 +48,12 @@ const CheckoutForm = () => {
   };
 
   const createPaymentIntent = async () => {
-    console.log("hello");
+    try {
+      const data = await axios.post(
+        "/.netlify/functions/create-payment-intent",
+        JSON.stringify({ cart, shipping_fee, total_amount })
+      );
+    } catch (error) {}
   };
 
   useEffect(() => {
